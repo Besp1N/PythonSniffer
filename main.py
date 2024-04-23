@@ -1,28 +1,51 @@
-from scapy.all import sniff
-import threading
-import sys
+from scapy.all import sniff, get_if_list
+
+
+def get_interfaces():
+    interfaces = get_if_list()
+    return interfaces
 
 
 def packet_callback(packet):
-    ip_layer = packet.getlayer("IP")
-    if ip_layer:
-        src_ip = ip_layer.src
-        dst_ip = ip_layer.dst
-        proto_num = ip_layer.proto
-        proto_name = ip_layer.get_field("proto").i2repr(ip_layer, proto_num)
-        print(f"Źródło: {src_ip} -> Cel: {dst_ip} | Protokół: {proto_name}")
+    if packet.haslayer("IP") and packet.haslayer("TCP"):
+        ip_src = packet["IP"].src
+        ip_dst = packet["IP"].dst
+        sport = packet["TCP"].sport
+        dport = packet["TCP"].dport
+        if packet.haslayer("Raw"):
+            payload = packet["Raw"].load
+        else:
+            payload = None
 
-
-def start_sniffing():
-    sniff(iface="en0", prn=packet_callback)
+        print("Packet Info:")
+        print(f"Source IP: {ip_src}, Destination IP: {ip_dst}")
+        print(f"Source Port: {sport}, Destination Port: {dport}")
+        if payload:
+            print("Payload:")
+            print(payload)
+        print("\n")
 
 
 def main():
-    sniff_thread = threading.Thread(target=start_sniffing)
-    sniff_thread.daemon = True
-    sniff_thread.start()
-    input("Naciśnij Enter, aby zakończyć...")
-    sys.exit()
+    interfaces = get_interfaces()
+    print("Available interfaces:")
+    for i, interface in enumerate(interfaces, start=1):
+        print(f"{i}. {interface}")
+
+    choice = input("Choose an interface by number: ")
+    try:
+        choice = int(choice)
+        if choice < 1 or choice > len(interfaces):
+            print("Invalid choice!")
+            return
+    except ValueError:
+        print("Invalid choice!")
+        return
+
+    chosen_interface = interfaces[choice - 1]
+    print(f"Sniffing on interface: {chosen_interface}")
+
+    sniff(iface=chosen_interface, prn=packet_callback, store=0)
 
 
 if __name__ == "__main__":
