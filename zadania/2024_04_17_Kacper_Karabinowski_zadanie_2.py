@@ -37,6 +37,7 @@ def get_interfaces():
 # Główna pętla gry
 def main():
     # Pobranie interfejsów
+    global selected_button
     interfaces = get_interfaces()
 
     # Szerokość przycisku
@@ -85,6 +86,7 @@ def main():
                         button, active = button_data
                         if button.collidepoint(event.pos) and active:
                             print(f"Kliknięto przycisk dla interfejsu: {interfaces[i]}")
+                            selected_button = interfaces[i]
                             # Po kliknięciu wyłączamy pozostałe przyciski
                             for j in range(len(buttons)):
                                 if j != i:
@@ -92,7 +94,7 @@ def main():
                             break
                     # Obsługa przycisku "Start"
                     if start_button[0].collidepoint(event.pos) and not start_button[1]:
-                        print("Kliknięto przycisk Start")
+                        print(f"Kliknięto przycisk Start and selected:{selected_button}")
                         # Tutaj możesz dodać logikę dla przycisku Start
                         start_button = (start_button[0], True)
 
