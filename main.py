@@ -71,10 +71,12 @@ def main():
         # Rysowanie przycisków
         for button_data in buttons:
             button, active = button_data
-            draw_button(button.x, button.y, button.width, button.height, BUTTON_COLOR, interfaces[buttons.index(button_data)].upper(), selected=not active)
+            draw_button(button.x, button.y, button.width, button.height, BUTTON_COLOR,
+                        interfaces[buttons.index(button_data)].upper(), selected=not active)
 
         # Rysowanie przycisku "Start"
-        draw_button(start_button[0].x, start_button[0].y, start_button[0].width, start_button[0].height, BUTTON_COLOR, "Start", selected=not start_button[1])
+        draw_button(start_button[0].x, start_button[0].y, start_button[0].width, start_button[0].height, BUTTON_COLOR,
+                    "Start", selected=not start_button[1])
 
         # Obsługa zdarzeń
         for event in pygame.event.get():
