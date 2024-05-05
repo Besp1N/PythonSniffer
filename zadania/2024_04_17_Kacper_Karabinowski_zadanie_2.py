@@ -8,6 +8,7 @@ pygame.init()
 # Ustawienia kolorów
 BACKGROUND_COLOR = (72, 80, 185)
 BUTTON_COLOR = (85, 224, 163)
+SELECTED_BUTTON_COLOR = (200, 100, 255)  # Kolor wybranego przycisku
 TEXT_COLOR = (255, 255, 255)
 
 # Ustawienia okna
@@ -17,7 +18,9 @@ pygame.display.set_caption("Przyciski w Pygame")
 
 
 # Funkcja rysująca przycisk
-def draw_button(x, y, width, height, color, text):
+def draw_button(x, y, width, height, color, text, selected=False):
+    if selected:
+        color = SELECTED_BUTTON_COLOR
     pygame.draw.rect(screen, color, (x, y, width, height), border_radius=10)
 
     font = pygame.font.SysFont(None, 25)
@@ -44,11 +47,15 @@ def main():
     x, y = 10, HEIGHT // 4
     for interface in interfaces:
         button_rect = pygame.Rect(x, y, button_width, 50)
-        buttons.append(button_rect)
+        buttons.append((button_rect, True))  # Tutaj dodajemy informację czy przycisk jest aktywny czy nie
         x += button_width + 10  # Dodajemy odstęp między przyciskami
         if x + button_width > WIDTH:  # Jeśli przycisk wyjdzie poza ekran, przechodzimy do następnej linii
             x = 10
             y += 60  # Dodajemy odstęp między liniami przycisków
+
+    # Dodanie przycisku "Start"
+    start_button_rect = pygame.Rect(WIDTH // 2 - 50, HEIGHT - 80, 100, 50)
+    start_button = (start_button_rect, False)  # Start button initially inactive
 
     while True:
         screen.fill(BACKGROUND_COLOR)
@@ -60,8 +67,12 @@ def main():
         screen.blit(text_surface, text_rect)
 
         # Rysowanie przycisków
-        for i, button in enumerate(buttons):
-            draw_button(button.x, button.y, button.width, button.height, BUTTON_COLOR, interfaces[i].upper())
+        for button_data in buttons:
+            button, active = button_data
+            draw_button(button.x, button.y, button.width, button.height, BUTTON_COLOR, interfaces[buttons.index(button_data)].upper(), selected=not active)
+
+        # Rysowanie przycisku "Start"
+        draw_button(start_button[0].x, start_button[0].y, start_button[0].width, start_button[0].height, BUTTON_COLOR, "Start", selected=not start_button[1])
 
         # Obsługa zdarzeń
         for event in pygame.event.get():
@@ -70,9 +81,20 @@ def main():
                 sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:  # Sprawdzamy, czy kliknięto lewym przyciskiem myszy
-                    for i, button in enumerate(buttons):
-                        if button.collidepoint(event.pos):
+                    for i, button_data in enumerate(buttons):
+                        button, active = button_data
+                        if button.collidepoint(event.pos) and active:
                             print(f"Kliknięto przycisk dla interfejsu: {interfaces[i]}")
+                            # Po kliknięciu wyłączamy pozostałe przyciski
+                            for j in range(len(buttons)):
+                                if j != i:
+                                    buttons[j] = (buttons[j][0], False)
+                            break
+                    # Obsługa przycisku "Start"
+                    if start_button[0].collidepoint(event.pos) and not start_button[1]:
+                        print("Kliknięto przycisk Start")
+                        # Tutaj możesz dodać logikę dla przycisku Start
+                        start_button = (start_button[0], True)
 
         pygame.display.flip()
 
