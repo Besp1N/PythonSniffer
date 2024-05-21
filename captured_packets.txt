@@ -1,0 +1,60 @@
+----------- Pakiet -----------
+Adres źródłowy: 34:ba:9a:8f:aa:20
+Adres docelowy: b0:be:83:2c:41:4e
+Typ protokołu: IP
+Zawartość: Ether / IP / TCP 35.186.224.34:https > 192.168.0.3:51011 PA / Raw
+
+----------- Pakiet -----------
+Adres źródłowy: b0:be:83:2c:41:4e
+Adres docelowy: 34:ba:9a:8f:aa:20
+Typ protokołu: IP
+Zawartość: Ether / IP / TCP 192.168.0.3:51011 > 35.186.224.34:https A
+
+----------- Pakiet -----------
+Adres źródłowy: b0:be:83:2c:41:4e
+Adres docelowy: 01:00:5e:7f:ff:fa
+Typ protokołu: IP
+Zawartość: Ether / IP / UDP 192.168.0.3:64804 > 239.255.255.250:ssdp / Raw
+
+----------- Pakiet -----------
+Adres źródłowy: b0:be:83:2c:41:4e
+Adres docelowy: 01:00:5e:00:00:fb
+Typ protokołu: IP
+Zawartość: Ether / IP / UDP / DNS Qry "b'_spotify-connect._tcp.local.'" 
+
+----------- Pakiet -----------
+Adres źródłowy: b0:be:83:2c:41:4e
+Adres docelowy: 33:33:00:00:00:fb
+Typ protokołu: IPv6
+Zawartość: Ether / IPv6 / UDP / DNS Qry "b'_spotify-connect._tcp.local.'" 
+
+----------- Pakiet -----------
+Adres źródłowy: b0:be:83:2c:41:4e
+Adres docelowy: 34:ba:9a:8f:aa:20
+Typ protokołu: IP
+Zawartość: Ether / IP / UDP / DNS Qry "b'e673.dsce9.akamaiedge.net.'" 
+
+----------- Pakiet -----------
+Adres źródłowy: 34:ba:9a:8f:aa:20
+Adres docelowy: b0:be:83:2c:41:4e
+Typ protokołu: IP
+Zawartość: Ether / IP / UDP / DNS Ans "23.58.216.49" 
+
+----------- Pakiet -----------
+Adres źródłowy: b0:be:83:2c:41:4e
+Adres docelowy: 34:ba:9a:8f:aa:20
+Typ protokołu: IP
+Zawartość: Ether / IP / TCP 192.168.0.3:57747 > 23.58.216.49:https S
+
+----------- Pakiet -----------
+Adres źródłowy: 34:ba:9a:8f:aa:20
+Adres docelowy: b0:be:83:2c:41:4e
+Typ protokołu: IP
+Zawartość: Ether / IP / TCP 23.58.216.49:https > 192.168.0.3:57747 SA
+
+----------- Pakiet -----------
+Adres źródłowy: b0:be:83:2c:41:4e
+Adres docelowy: 34:ba:9a:8f:aa:20
+Typ protokołu: IP
+Zawartość: Ether / IP / TCP 192.168.0.3:57747 > 23.58.216.49:https A
+
